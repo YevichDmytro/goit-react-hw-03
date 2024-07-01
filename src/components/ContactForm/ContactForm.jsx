@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 
-const ContactForm = () => {
+const ContactForm = ({ value }) => {
   return <Formik></Formik>;
 };
 
