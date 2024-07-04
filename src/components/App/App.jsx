@@ -15,22 +15,22 @@ const App = () => {
   //   });
   // };
 
-  // const contactFilter = value => {
-  //   setFilter();
-  // };
+  const addContact = newContact => {
+    setContacts(prevContact => {
+      return [...prevContact, newContact];
+    });
+  };
 
-  // const addContact = newContact => {};
-
-  const filterContacts = contacts.filter(contact =>
+  const contactFilter = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm />
+      <ContactForm onAdd={addContact} />
       <SearchBox value={filter} onFilter={setFilter} />
-      <ContactList value={filterContacts} />
+      <ContactList value={contactFilter} />
     </div>
   );
 };
