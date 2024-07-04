@@ -3,6 +3,7 @@ import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import SearchBox from '../SearchBox/SearchBox';
 import defaultContactsList from '../../contacts.json';
+import { nanoid } from "nanoid";
 
 const App = () => {
   const [contacts, setContacts] = useState(defaultContactsList);
@@ -15,11 +16,16 @@ const App = () => {
   //   });
   // };
 
-  const addContact = newContact => {
-    setContacts(prevContact => {
-      return [...prevContact, newContact];
+  const addContact = values => {
+     values.id = nanoid();
+    setContacts((prevContacts) => {
+      return [...prevContacts, values];
     });
   };
+
+  // const deleteContact = () => {
+  //   setContacts()
+  // }
 
   const contactFilter = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())

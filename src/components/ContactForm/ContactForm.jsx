@@ -15,25 +15,25 @@ const FeedbackSchema = Yup.object().shape({
     .required('Required'),
 });
 
+const initialValues = {
+  username: "",
+  usertel: ""
+};
+
 const ContactForm = ({ onAdd }) => {
-  const handleSubmit = (e, actions) => {
-    // e.preventDefault();
-    // onAdd({
-    //   id: nanoid(),
-    //   name: e.target.elements.username.value,
-    //   number: e.target.elements.usernumber.value,
-    // });
-    // actions.resetForm();
-    console.log(e.target.elements.username.value);
+  const handleSubmit = (values, actions) => {
+    console.log(values);
+    onAdd(values);
+    actions.resetForm();
   };
 
   const nameFieldId = nanoid();
   const numberFieldId = nanoid();
 
   return (
-    <Formik onSubmit={handleSubmit} validationSchema={FeedbackSchema}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={FeedbackSchema}>
       <Form className={style.form}>
-        <label htmlFor='{nameFieldId}'>Name</label>
+        <label htmlFor={nameFieldId}>Name</label>
         <Field
           type='text'
           name='username'
@@ -41,14 +41,13 @@ const ContactForm = ({ onAdd }) => {
           className={style.field}
         />
 
-        <label htmlFor='{numberFieldId}'>Number</label>
+        <label htmlFor={numberFieldId}>Number</label>
         <Field
           type='text'
-          name='usernumber'
+          name='usertel'
           id={numberFieldId}
           className={style.field}
         />
-
         <Button variant='contained' color='success' type='submit'>
           Add contact
         </Button>
