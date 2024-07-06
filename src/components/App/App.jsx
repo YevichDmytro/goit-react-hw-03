@@ -3,40 +3,36 @@ import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import SearchBox from '../SearchBox/SearchBox';
 import defaultContactsList from '../../contacts.json';
-import { nanoid } from "nanoid";
+import { nanoid } from 'nanoid';
+import style from './App.module.css';
 
 const App = () => {
   const [contacts, setContacts] = useState(defaultContactsList);
   const [filter, setFilter] = useState('');
 
-  // const updContacts = nameContact => {
-  //   setContacts({
-  //     ...contacts,
-  //     [nameContact]: contacts[nameContact],
-  //   });
-  // };
-
-  const addContact = values => {
-     values.id = nanoid();
-    setContacts((prevContacts) => {
-      return [...prevContacts, values];
+  const addContact = newContact => {
+    newContact.id = nanoid();
+    setContacts(prevContacts => {
+      return [...prevContacts, newContact];
     });
   };
 
-  // const deleteContact = () => {
-  //   setContacts()
-  // }
+  const deleteContact = contactId => {
+    setContacts(prevContacts =>
+      prevContacts.filter(contact => contact.id !== contactId)
+    );
+  };
 
-  const contactFilter = contacts.filter(contact =>
+  const filterContact = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
-    <div>
+    <div className={style.wrap}>
       <h1>Phonebook</h1>
       <ContactForm onAdd={addContact} />
       <SearchBox value={filter} onFilter={setFilter} />
-      <ContactList value={contactFilter} />
+      <ContactList value={filterContact} onDelete={deleteContact} />
     </div>
   );
 };
