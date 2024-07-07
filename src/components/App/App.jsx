@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import SearchBox from '../SearchBox/SearchBox';
@@ -7,7 +7,15 @@ import { nanoid } from 'nanoid';
 import style from './App.module.css';
 
 const App = () => {
-  const [contacts, setContacts] = useState(defaultContactsList);
+  const [contacts, setContacts] = useState(() => {
+    const savedPhoneBook = localStorage.getItem('phone-book');
+
+    if (savedPhoneBook !== null) {
+      return JSON.parse(savedPhoneBook);
+    }
+
+    return defaultContactsList;
+  });
   const [filter, setFilter] = useState('');
 
   const addContact = newContact => {
@@ -25,6 +33,10 @@ const App = () => {
 
   const filterContact = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  useEffect(() =>
+    localStorage.setItem('phone-book', JSON.stringify(contacts), [contacts])
   );
 
   return (

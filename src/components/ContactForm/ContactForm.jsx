@@ -1,9 +1,8 @@
 import style from './ContactForm.module.css';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { nanoid } from 'nanoid';
 import { Button } from '@mui/material';
 import * as Yup from 'yup';
-import { ErrorMessage } from 'formik';
 
 const ContactForm = ({ onAdd }) => {
   const FeedbackSchema = Yup.object().shape({
@@ -44,7 +43,11 @@ const ContactForm = ({ onAdd }) => {
             autoComplete='on'
             placeholder='Jack Robinson'
           />
-          <ErrorMessage name='name' component='span' className={style.errorText}/>
+          <ErrorMessage
+            name='name'
+            component='span'
+            className={style.errorText}
+          />
         </div>
 
         <div className={style.wrap}>
@@ -57,7 +60,11 @@ const ContactForm = ({ onAdd }) => {
             placeholder='000-00-00'
             autoComplete='on'
           />
-          <ErrorMessage name='number' component='span' className={style.errorText}/>
+          <ErrorMessage
+            name='number'
+            component='span'
+            className={style.errorText}
+          />
         </div>
 
         <Button variant='contained' color='success' type='submit'>
